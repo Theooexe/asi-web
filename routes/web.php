@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ToolController;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,5 @@ Route::resource('tools', ToolController::class);
 
 
 Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
+
+Route::get('/search',[InvoiceController::class,'search'])->name('search');

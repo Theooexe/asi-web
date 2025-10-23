@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'client_id',
         'total_amount',
@@ -17,4 +18,16 @@ class Invoice extends Model
         'acquitted_at'
     ];
 
+    protected $casts = [
+        'send_at' => 'datetime',
+        'acquitted_at' => 'datetime',
+    ];
+
+    public function client(){
+        return $this->belongsTo(Client::class);
+    }
+
+    public function tools(){
+        return $this->belongsToMany(Tool::class ,'invoice_tool');
+    }
 }

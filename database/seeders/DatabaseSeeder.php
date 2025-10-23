@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(InvoiceSeeder::class);
+        $this->call(ClientSeeder::class);
     }
 }
