@@ -1,6 +1,8 @@
 <?php
 
 use App\Helpers\Price;
+use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ToolController;
 use App\Models\Tool;
@@ -50,4 +52,16 @@ Route::get('/toolsedit', function () {
 Route::get('/api', function () {
     $price = new Price('EUR', 100);
     return response()->json($price->toArray());
+});
+
+
+Route::middleware('guest')->group(function () {
+    Route::get('/auth/login', [AuthenticationController::class, 'showForm'])->name('login');
+    Route::post('/auth/login', [AuthenticationController::class, 'login']);
+    Route::get('/auth/callback', [AuthenticationController::class, 'callback'])->name('authentication.callback');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/auth/logout', [AuthenticationController::class, 'logout'])->name('logout');
+    Route::get('/home', HomeController::class)->name('home');
 });
