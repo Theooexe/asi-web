@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Services\RateService;
 use InvalidArgumentException;
 use Illuminate\Contracts\Support\Arrayable;
 use Stringable;
@@ -30,7 +31,8 @@ class Price implements Arrayable, Stringable
 
     private static function getCurrencyRate($currency)
     {
-        return crc32($currency) / 10_000_000_000;
+        $rateService = app(RateService::class);
+        return $rateService->getRateFromCurrency($currency);
     }
 
     public static function fromEuros(float $price)

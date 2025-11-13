@@ -14,6 +14,11 @@ return [
     |
     */
 
+    'rate' => [
+        'url' => env('RATE_API_URL'),
+    ],
+
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

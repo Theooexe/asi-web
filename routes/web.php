@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Price;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ToolController;
 use App\Models\Tool;
@@ -44,4 +45,9 @@ Route::get('/toolsedit', function () {
             'currency_rate' => rand(0, 100) / 100,
         ])]);
     }
+});
+
+Route::get('/api', function () {
+    $price = new Price('EUR', 100);
+    return response()->json($price->toArray());
 });
