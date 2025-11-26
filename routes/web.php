@@ -64,4 +64,5 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/auth/logout', [AuthenticationController::class, 'logout'])->name('logout');
     Route::get('/home', HomeController::class)->name('home');
+    Route::resource('invoices', InvoiceController::class);
 });

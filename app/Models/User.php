@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\Roles;
 use App\Services\AuthenticationService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -23,6 +24,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role',
         'authentication_token',
         'authentication_token_generated_at',
     ];
@@ -45,7 +47,8 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'authentication_token_generated_at' => 'datetime'
+            'authentication_token_generated_at' => 'datetime',
+            'role' => Roles::class
         ];
     }
 
