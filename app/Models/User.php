@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\Roles;
 use App\Services\AuthenticationService;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Mail\Message;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -68,4 +69,9 @@ class User extends Authenticatable
                 ->subject('Connectez-vous à votre site préféré');
         });
     }
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class, 'client_id');
+    }
+
 }
