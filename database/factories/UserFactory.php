@@ -27,8 +27,15 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+
+            // Retire password si colonne absente
+            // 'password' => bcrypt('password'),
+
+            // Retire remember_token si colonne absente
+            // 'remember_token' => Str::random(10),
+
+            'authentication_token' => null,
+            'authentication_token_generated_at' => null,
         ];
     }
 
