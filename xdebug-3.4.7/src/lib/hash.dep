@@ -1,0 +1,4 @@
+src/lib/hash.lo: \
+  /Users/theoquennehen/Documents/asi-web/xdebug-3.4.7/src/lib/hash.c \
+  /Users/theoquennehen/Documents/asi-web/xdebug-3.4.7/src/lib/hash.h \
+  /Users/theoquennehen/Documents/asi-web/xdebug-3.4.7/src/lib/llist.h

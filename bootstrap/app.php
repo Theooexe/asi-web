@@ -1,6 +1,8 @@
 <?php
 
 use App\Console\Commands\CreateUser;
+use App\Console\Commands\GenerateCsv;
+use App\Console\Commands\ProcessCsv;
 use App\Console\Commands\TotalAmountUser;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -17,7 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withCommands([
         CreateUser::class,
-        TotalAmountUser::class
+        TotalAmountUser::class,
+        GenerateCsv::class,
+        ProcessCsv::class
     ])
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -2,15 +2,15 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
 use App\Enums\Roles;
+use App\Events\UserCreated;
 use Illuminate\Console\Command;
 
 class CreateUser extends Command
 {
     /**
      * Nom et signature de la commande.
-     * Exemple d'appel : php artisan user:create "Jean Dupont" "jean@test.com" --role=admin
+     * Exemple : php artisan user:create "Jean Dupont" "jean@test.com" --role=admin
      */
     protected $signature = 'user:create {name} {email} {--role=}';
 
@@ -32,7 +32,6 @@ class CreateUser extends Command
             if ($this->confirm('Voulez-vous créer un nouvel utilisateur client ?', true)) {
                 $role = Roles::Client->value;
             } else {
-                //$roles = collect(Roles::cases()
                 $role = $this->choice('Quel rôle doit avoir le nouvel utilisateur ?', [
                     Roles::Client->value,
                     Roles::Admin->value,
@@ -41,13 +40,9 @@ class CreateUser extends Command
             }
         }
 
-        User::create([
-            'name' => $name,
-            'email' => $email,
-            'role' => $role,
-        ]);
+        event(new UserCreated($name, $email, $role));
 
-        $this->info("Utilisateur '$name' ($role) créé avec succès !");
+        $this->info("Événement UserCreated émis pour '$name' ($role)");
         return Command::SUCCESS;
     }
 }
