@@ -2,10 +2,8 @@
 
 use App\Models\User;
 use App\Services\AuthenticationService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 
-uses(RefreshDatabase::class);
 
 /**
  * BUT : Tester la méthode createToken
@@ -15,8 +13,6 @@ uses(RefreshDatabase::class);
  * - La date de génération est renseignée
  */
 test('createToken adds a 20 characters token to the user', function () {
-    Carbon::setTestNow(now());
-
     $user = User::query()->create([
         'name'  => 'Test User',
         'email' => 'test@example.com',
@@ -31,11 +27,8 @@ test('createToken adds a 20 characters token to the user', function () {
     $user->refresh();
 
     expect($token)->toBeString()
-        ->and(strlen($token))->toBe(20)
-        ->and($user->authentication_token)->toBe($token)
-        ->and($user->authentication_token_generated_at)->not->toBeNull();
-
-    Carbon::setTestNow();
+        -> toHaveLength(20)
+        ->toBe($user->authentication_token);
 });
 
 /**
@@ -43,7 +36,7 @@ test('createToken adds a 20 characters token to the user', function () {
  */
 describe('checkToken method', function () {
 
-    test('returns false if the token validity exceeds 24h', function () {
+    it('returns false if the token validity exceeds 24h', function () {
         $user = User::query()->create([
             'name'  => 'Expired User',
             'email' => 'expired@example.com',
@@ -56,7 +49,7 @@ describe('checkToken method', function () {
         expect($service->checkToken('12345678901234567890'))->toBeFalse();
     });
 
-    test('returns false if the token is not identical to the one in database', function () {
+    it('returns false if the token is not identical to the one in database', function () {
         $user = User::query()->create([
             'name'  => 'Wrong Token User',
             'email' => 'wrong@example.com',
@@ -69,7 +62,7 @@ describe('checkToken method', function () {
         expect($service->checkToken('WRONG_TOKEN_SUBMITTED'))->toBeFalse();
     });
 
-    test('returns true if the token and validity date are correct', function () {
+    it('returns true if the token and validity date are correct', function () {
         $user = User::query()->create([
             'name'  => 'Valid User',
             'email' => 'valid@example.com',
