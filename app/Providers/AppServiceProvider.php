@@ -15,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(RateService::class, function ($app) {
-            return new RateService(config('services.rate.url', 'http'));
+
+            $url = config('services.rate.url') ?? 'https://api.exchangerate.host/latest';
+
+            return new RateService($url);
         });
     }
 
