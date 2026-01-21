@@ -24,11 +24,15 @@ new class extends Component {
         Tool::create([
             'name' => $this->name,
             'description' => $this->description,
-            'price' => ['amount' => (int)$this->price],
+            'price' => [
+                'amount' => (int)$this->price,
+                'currency' => 'EUR',           // Ajout de la clé manquante
+                'currency_rate' => 1.0,        // Ajout de la clé manquante
+            ],
         ]);
 
         $this->reset(['name', 'description', 'price']);
-        session()->flash('message', 'Outil enregistré avec succès !');
+        session()->flash('message', 'Outil enregistré !');
     }
 
     public function toggleSort()
